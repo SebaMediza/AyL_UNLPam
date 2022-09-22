@@ -13,6 +13,6 @@ def convert(input_file_path: str, output_fil_path: str) -> None:
 
 
 if __name__ == '__main__':
-    Input = r"C:\Users\arcen\Documents\AyL\Practico_1\MOCK_DATA.csv"
-    Output = r"C:\Users\arcen\Documents\AyL\Practico_1\MOCK_DATA_MOD.csv"
+    Input = r"C:\Users\arcen\Documents\AyL\AyL_UNLPam\MOCK_DATA.csv"
+    Output = r"C:\Users\arcen\Documents\AyL\AyL_UNLPam\MOCK_DATA_MOD.csv"
     convert(Input, Output)
