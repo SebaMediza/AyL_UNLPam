@@ -16,7 +16,7 @@ def validate_b(value: str) -> bool:
 # Variable de Python
 def validate_c(value: str) -> bool:
     my_string = r"\_|\w+\_|[a-z0-9]+$"
-    return re.search(my_string, value) is not None
+    return (my_string, value) is not None
 
 
 # Cadenas del tipo {a^nbc^n/n,m > 0}
