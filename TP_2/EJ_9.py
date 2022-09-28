@@ -2,7 +2,11 @@ import json
 
 
 def turing_machine(cadena: str, regla: str) -> bool:
-    json.load(regla)
+    with open(regla) as maqunaTuring:
+        rules = json.load(maqunaTuring)
+        if rules is None:
+
+    return True
 
 
 if __name__ == '__main__':
