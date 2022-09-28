@@ -1,11 +1,12 @@
 import json
 
 
-def testuringmachine(cadena: str, turing_machine: str) -> bool:
-    json.load(cadena, turing_machine)
-    return False
+def turing_machine(cadena: str, rules: str) -> bool:
+
+        return True
 
 
 if __name__ == '__main__':
     string = '00010010101010'
-    testuringmachine(string)
+    reglas = r"C:\Users\sebam\Documents\Carreras\Ingenieria en sistemas\2° Año\2° Semestre\Autómatas y Lenguajes\EJ_1.jff"
+    turing_machine(string, reglas)
