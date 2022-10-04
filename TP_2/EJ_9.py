@@ -4,7 +4,7 @@ import json
 def turing_machine(cadena: str, regla: str) -> bool:
     with open(regla) as maqunaTuring:
         rules = json.load(maqunaTuring)
-        if rules is None:
+        # if rules is None:
 
     return True
 
