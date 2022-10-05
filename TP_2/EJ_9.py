@@ -9,13 +9,15 @@ def turing_machine(cadena: str, regla: str) -> None:
     readCharacter = rules.getElementsByTagName('read')
     writeCharacter = rules.getElementsByTagName('write')
     movement = rules.getElementsByTagName('move')
+    final = rules.getElementByTagName('final')
     # print("%d block" % bloques.length)
-    while transicionTo != 4:
-        for i in cadena:
-            print(cadena.index(i))
+    print(transicionTo)
+    print(transicionFrom)
+    # while transicionTo != final:
+
 
 
 if __name__ == '__main__':
-    string = '0010010101010'
+    string = '0'
     reglas = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_2\EJ_1.jff'
     turing_machine(string, reglas)
