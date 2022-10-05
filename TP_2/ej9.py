@@ -99,7 +99,7 @@ def parse_jff(file):
         "F": []
     }
 
-    id_q = dict() # puede ocurrir que en el xml la id y el nombre sean diferentes
+    id_q = dict()  # puede ocurrir que en el xml la id y el nombre sean diferentes
 
     for block in xml['structure']['automaton']['block']:
         if block['@name'] not in j['Q']:
