@@ -1,22 +1,23 @@
-class Parse_a(object):
+class ParseA(object):
     def cadena(self: str):
         print(self)
 
 
-class Parse_b(object):
+class ParseB(object):
     def cadena(self: str):
         print(self)
 
 
-class Parse_c(object):
+class ParseC(object):
     def cadena(self: str):
         print(self)
 
 
-class Parse_d(object):
+class ParseD(object):
     def cadena(self: str):
         print(self)
 
 
 if __name__ == '__main__':
-    print('Hello World')
+    p = ParseA
+    p.cadena('')
