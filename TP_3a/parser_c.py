@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 
 
 class ParseC(object):
-    def parseC(self, cadena: str):
+    def evaluate(self, cadena: str):
 
         def macht(string: str, stack: str):
             while string[0] == stack[0]:
@@ -48,4 +48,4 @@ if __name__ == '__main__':
     file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1c.jff'
     chain = 'aabb$'
     p = ParseC
-    print(p.parseC(file, chain))
+    print(p.evaluate(file, chain))

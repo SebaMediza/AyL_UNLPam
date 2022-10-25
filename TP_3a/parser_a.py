@@ -2,13 +2,13 @@ import xml.etree.ElementTree as ET
 
 
 class ParserA(object):
-    def parseA(self: str, cadena: str):
+    def evaluate(self: str, cadena: str):
         def macht(string: str, stack: str, resultado: str):
             while string[0] == stack[0]:
                 string = string[1:]
                 stack = stack[1:]
                 if string[0] == '$':
-                    print('La codena pertenece al lenguaje')
+                    print('La cadena pertenece al lenguaje')
                     exit(0)
             if stack[0] == 'S':
                 S(string, stack, resultado)
@@ -49,6 +49,6 @@ class ParserA(object):
 
 if __name__ == '__main__':
     file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1a.jff'
-    chain = 'aa$'
+    chain = '(((((a+a)+a)+a)+a)+a)'
     p = ParserA
-    print(p.parseA(file, chain))
+    p.evaluate(file, chain + '$')

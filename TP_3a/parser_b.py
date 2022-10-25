@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
 
 
-class ParserA(object):
-    def parseA(self: str, cadena: str):
+class ParserB(object):
+    def evaluate(self: str, cadena: str):
         def macht(string: str, stack: str, resultado: str):
             while string[0] == stack[0]:
                 string = string[1:]
@@ -50,6 +50,6 @@ class ParserA(object):
 if __name__ == '__main__':
     file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1b.jff'
     chain = 'abbaabbaabbaabbab'
-    p = ParserA
+    p = ParserB
 
-    print(chain, p.parseA(file, chain + '$'))
+    print(chain, p.evaluate(file, chain + '$'))
