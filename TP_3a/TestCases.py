@@ -1,18 +1,18 @@
 import unittest
 
-from TP_3a.parse_a import ParserA
-from TP_3a.parse_b import ParserB
-from TP_3a.parse_c import ParserC
-from TP_3a.parse_d import ParserD
+from TP_3a.parser_a import ParserA
+# from TP_3a.parser_b import ParserB
+# from TP_3a.parse_c import ParserC
+# from TP_3a.parse_d import ParserD
 
 
 class TestCaseParse(unittest.TestCase):
     def test_a(self):
         v = [
-            ("a", True),
-            ("aa", False),
-            ("(a+a)", True),
-            ("(((((a+a)+a)+a)+a)+a)", True)
+            ("a$", True),
+            ("aa$", False),
+            ("(a+a)$", True),
+            ("(((((a+a)+a)+a)+a)+a)$", True)
         ]
         p = ParserA()
         for t in v:
@@ -41,12 +41,12 @@ class TestCaseParse(unittest.TestCase):
         p = ParserB()
         for t in v:
             with self.subTest(t[0]):
-                r = p.evaluate(t[0] + "$")
+                r = evaluate(t[0] + "$")
                 self.assertEqual(r, t[1])
 
     def test_b_exception(self):
         p = ParserB()
-        self.assertRaises(Exception, p.evaluate, "abba")
+        self.assertRaises(Exception, evaluate, "abba")
 
     def test_c(self):
         v = [
@@ -60,7 +60,7 @@ class TestCaseParse(unittest.TestCase):
         p = ParserC()
         for t in v:
             with self.subTest(t[0]):
-                r = p.evaluate(t[0] + "$")
+                r = evaluate(t[0] + "$")
                 self.assertEqual(r, t[1])
 
     def test_c_exception(self):
@@ -68,7 +68,7 @@ class TestCaseParse(unittest.TestCase):
         p = ParserC()
         for t in v:
             with self.subTest(t):
-                self.assertRaises(Exception, p.evaluate, t + "$")
+                self.assertRaises(Exception, evaluate, t + "$")
 
     def test_d(self):
         v = [
@@ -85,7 +85,7 @@ class TestCaseParse(unittest.TestCase):
         p = ParserD()
         for t in v:
             with self.subTest(t[0]):
-                r = p.evaluate(t[0] + "$")
+                r = evaluate(t[0] + "$")
                 self.assertEqual(r, t[1])
 
     def test_d_exception(self):
@@ -93,7 +93,7 @@ class TestCaseParse(unittest.TestCase):
         p = ParserD()
         for t in v:
             with self.subTest(t):
-                self.assertRaises(Exception, p.evaluate, t + "$")
+                self.assertRaises(Exception, evaluate, t + "$")
 
 
 if __name__ == '__main__':
