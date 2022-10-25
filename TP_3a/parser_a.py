@@ -49,6 +49,6 @@ class ParserA(object):
 
 if __name__ == '__main__':
     file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1a.jff'
-    chain = '(((((a+a)+a)+a)+a)+a)'
+    chain = 'aa'
     p = ParserA
     p.evaluate(file, chain + '$')
