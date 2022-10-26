@@ -13,4 +13,8 @@
 		<left>S</left>&#13;
 		<right/>&#13;
 	</production>&#13;
+	<production>&#13;
+		<left>T</left>&#13;
+		<right/>&#13;
+	</production>&#13;
 </structure>
