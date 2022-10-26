@@ -1,51 +1,57 @@
 import xml.etree.ElementTree as ET
 
 
-class ParseC(object):
-    def evaluate(self, cadena: str):
+class ParserC(object):
+    def __init__(self):
+        self.string = None
+        self.stack = None
+        self.file = None
+        self.myroot = None
 
-        def macht(string: str, stack: str):
-            while string[0] == stack[0]:
-                stack = stack[1:]
-                string = string[1:]
-                if string[0] == '$':
-                    print('La cadena pertenece al Legunaje')
-                    exit(0)
-            if stack[0] == 'S':
-                S(string, stack)
-            if stack[0] == 'T':
-                T(string, stack)
-
-        def S(string: str, stack: str):
-            for x in myroot.findall('production'):
-                right = x.find('right').text
-                left = x.find('left').text
-                if stack[0] == 'S' and right is None:
-                    stack = stack[1:]
-                    break
-                if stack[0] == left[0] and string[0] == right[0]:
-                    stack = right + stack[1:]
-                    break
-            macht(string, stack)
-
-        def T(string: str, stack: str):
-            for x in myroot.findall('production'):
-                right = x.find('right').text
-                left = x.find('left').text
-                if stack[0] == left[0] and string[0] == right[0]:
-                    stack = right + stack[1:]
-                    break
-            macht(string, stack)
-
-        with open(self, 'r') as rules:
+    def evaluate(self, cadena, file):
+        self.string = cadena
+        self.file = file
+        with open(self.file, 'r') as rules:
             ll1 = ET.parse(rules)
-            myroot = ll1.getroot()
-            pila = 'S'
-            S(cadena, pila)
+            self.myroot = ll1.getroot()
+            self.stack = 'S'
+            self.S(self.myroot)
+        if self.string[0] == '$':
+            return True
+
+    def macht(self):
+        while self.string[0] == self.stack[0]:
+            self.string = self.string[1:]
+            self.stack = self.stack[1:]
+        if self.stack[0] == 'S':
+            self.S(self.myroot)
+        if self.stack[0] == 'T':
+            self.T(self.myroot)
+
+    def S(self, myroot):
+        for x in myroot.findall('production'):
+            right = x.find('right').text
+            left = x.find('left').text
+            if self.stack[0] == 'S' and right is None:
+                self.stack = self.stack[1:]
+                break
+            if self.stack[0] == left[0] and self.string[0] == right[0]:
+                self.stack = right + self.stack[1:]
+                break
+        self.macht()
+
+    def T(self, myroot):
+        for x in myroot.findall('production'):
+            right = x.find('right').text
+            left = x.find('left').text
+            if self.stack[0] == left[0] and self.string[0] == right[0]:
+                self.stack = right + self.stack[1:]
+                break
+        self.macht()
 
 
 if __name__ == '__main__':
-    file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1c.jff'
-    chain = 'aabb$'
-    p = ParseC
-    print(p.evaluate(file, chain))
+    p = ParserC()
+    word = 'aabb'
+    table = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\parser_c_tabla_ll1.jff'
+    print(p.evaluate(word + '$', table))
