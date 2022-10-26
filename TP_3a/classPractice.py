@@ -23,9 +23,6 @@ class ParserA(object):
         while self.string[0] == self.stack[0]:
             self.string = self.string[1:]
             self.stack = self.stack[1:]
-            if self.string[0] == '$':
-                print('La cadena pertenece al lenguaje')
-                exit(0)
         if self.stack[0] == 'S':
             self.S(self.myroot)
         if self.stack[0] == 'F':
@@ -55,7 +52,7 @@ class ParserA(object):
 
 if __name__ == '__main__':
     p = ParserA()
-    word = 'a'
+    word = '(a+a)'
     table = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1a.jff'
     self = ''
-    print(p.evaluate(word, table))
+    print(p.evaluate(word + '$', table))
