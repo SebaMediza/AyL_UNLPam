@@ -9,10 +9,10 @@ from TP_3a.parser_c import ParserC
 class TestCaseParse(unittest.TestCase):
     def test_a(self):
         v = [
-            ("a$", True),
-            ("aa$", False),
-            ("(a+a)$", True),
-            ("(((((a+a)+a)+a)+a)+a)$", True)
+            ("a", True),
+            ("aa", False),
+            ("(a+a)", True),
+            ("(((((a+a)+a)+a)+a)+a)", True)
         ]
         p = ParserA()
         for t in v:
