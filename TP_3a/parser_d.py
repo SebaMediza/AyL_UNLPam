@@ -1,4 +1,4 @@
-class ParserC(object):
+class ParserD(object):
     def __init__(self):
         self.cadena = None
 
@@ -9,28 +9,22 @@ class ParserC(object):
 
     def S(self):
         if self.cadena[0] == 'a':
-            self.match('a')
-            self.T()
+            self.F()
         elif self.cadena[0] == 'b':
+            self.F()
+        elif self.cadena[0] == '$':
             pass
 
-    def T(self):
+    def F(self):
         if self.cadena[0] == 'a':
             self.match('a')
             self.S()
-            self.match('b')
-            self.match('b')
         elif self.cadena[0] == 'b':
-            pass
+            self.match('b')
+            self.S()
 
     def match(self, s):
         if s == self.cadena[0]:
             self.cadena = self.cadena[1:]
         else:
             raise Exception("Error", "En Match")
-
-
-if __name__ == '__main__':
-    p = ParserC()
-    word = 'aaaaaabbbbb'
-    print(p.evaluate(word + '$'))

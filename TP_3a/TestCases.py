@@ -3,7 +3,7 @@ import unittest
 from TP_3a.parser_a import ParserA
 from TP_3a.parser_b import ParserB
 from TP_3a.parser_c import ParserC
-# from TP_3a.parse_d import ParserD
+from TP_3a.parser_d import ParserD
 
 
 class TestCaseParse(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestCaseParse(unittest.TestCase):
                 self.assertEqual(r, t[1])
 
     def test_a_exception(self):
-        v = [("(a+(a+a))"), ("")]
+        v = ["(a+(a+a))", ""]
         p = ParserA()
         for t in v:
             with self.subTest(t):
