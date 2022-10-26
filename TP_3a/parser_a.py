@@ -52,14 +52,7 @@ class ParserA(object):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
-    file = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\1a.jff'
-    chain = 'a'
-    p = ParserA
-    p.evaluate(file, chain + '$')
-=======
     p = ParserA()
     word = 'a'
     table = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_3a\parser_a_tabla_ll1.jff'
     print(p.evaluate(word + '$', table))
->>>>>>> 7ee54d52ac78b727e907bc9fa121d614fc83b1c8
