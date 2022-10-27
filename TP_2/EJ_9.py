@@ -1,28 +1,21 @@
-import json
+import xml.etree.ElementTree as ET
 
 
-def turing_machine(cadena: str, regla: str) -> bool:
-    with open(regla, 'r') as turing:
-        data = json.load(turing)
-        q = data['Q']
-        delta = data['Delta']
-        first = data['q0']
-        end = data['F']
-        now = first
-        while now != end:
-            for i in cadena:
-                if i in first:
-                    print(i)
-                now = delta['q1']
-                if i in now:
-                    print(i)
-                if i == '#':
-                    now = end
-
-    return True
+def turing_machine(cadena: str, regla: str):
+    with open(regla, 'r') as file:
+        turing = ET.parse(file)
+        myroot = turing.getroot()
+        for y in myroot:
+            for x in y.findall('transition'):
+                desde = x.find('from').text
+                to = x.find('to').text
+                read = x.find('read').text
+                write = x.find('write').text
+                move = x.find('move').text
+                print(desde, to, read, write, move)
 
 
 if __name__ == '__main__':
     string = '00001111#'
-    reglas = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_2\data.json'
-    print(turing_machine(string, reglas))
+    reglas = r'C:\Users\sebam\Documents\Programacion\AyL_UNLPam\TP_2\EJ_3.jff'
+    turing_machine(string, reglas)
