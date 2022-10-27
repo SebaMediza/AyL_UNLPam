@@ -11,23 +11,18 @@ class ParserA(object):
     def S(self):
         if self.cadena[0] == '(':
             self.match('(')
+            self.S()
+            self.match('+')
             self.F()
+            self.match(')')
         elif self.cadena[0] == 'a':
-            self.match('a')
+            self.F()
+        else:
+            raise Exception('Error en S')
 
     def F(self):
         if self.cadena[0] == 'a':
             self.match('a')
-            self.F()
-        elif self.cadena[0] == '+':
-            self.match('+')
-            self.F()
-        elif self.cadena[0] == ')':
-            self.match(')')
-            self.F()
-        elif self.cadena[0] == '(':
-            self.match('(')
-            self.S()
 
     def match(self, s):
         if s == self.cadena[0]:
@@ -38,5 +33,5 @@ class ParserA(object):
 
 if __name__ == '__main__':
     p = ParserA()
-    word = '(((((a+a)+a)+a)+a)+a)'
+    word = 'aa'
     print(p.evaluate(word + '$'))
