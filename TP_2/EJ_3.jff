@@ -12,6 +12,7 @@
 			<tag>Machine1</tag>&#13;
 			<x>501.0</x>&#13;
 			<y>153.0</y>&#13;
+			<final/>&#13;
 		</block>&#13;
 		<!--The list of transitions.-->&#13;
 		<transition>&#13;
