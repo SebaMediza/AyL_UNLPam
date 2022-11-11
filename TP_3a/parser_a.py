@@ -9,21 +9,6 @@
     a) S → F        Es LL1
        S → (S+F)
        F → a
-
-    b) S → aAS | b      Es LL1
-       A → a | bSA
-
-    c) S → aaSbb | a | ε        NO en LL1
-
-        S → aT | ε
-        T → aSbb | ε
-
-    d) S → A | B        NO es LL1
-       A → aA | ε
-       B → bB | ε
-
-       S → F | ε
-       F → aA | bB
 """
 
 

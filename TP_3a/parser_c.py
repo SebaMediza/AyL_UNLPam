@@ -1,3 +1,18 @@
+"""
+    Ejercicio 1: Para cada una de las siguientes gramáticas hacer:
+        • Determinar si es LL1 construyendo la tabla correspondiente.
+        • Para las que no sean LL1 intentar hacer alguna modificación a la gramática (por
+          ejemplo, factorizar o eliminar recursividad izquierda), de tal modo que se
+          conviertan en otras gramáticas que lo sean.
+        • Dado una cadena cualquiera realizar el árbol de análisis sintáctico.
+
+    c) S → aaSbb | a | ε        NO en LL1
+
+        S → aT | ε
+        T → aSbb | ε
+"""
+
+
 class ParserC(object):
     def __init__(self):
         self.cadena = None
