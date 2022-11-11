@@ -14,14 +14,20 @@
 
 
 class ParserC(object):
-    def __init__(self):
+    def __init__(self):  # Constructor que inicializa la cadena con None
         self.cadena = None
 
-    def evaluate(self, cadena):
+    def evaluate(self, cadena):  # Metodo principal de del parsing, recibe por parametro, la cadena a analizar
         self.cadena = cadena
         self.S()
         return self.cadena[0] == '$'
 
+    """
+            Funcionamiento basico, cada metodo de la clase, lee el primer terminal de la cadena
+            y segun la tabla LL1, hace la llamada a otro metodo o llama al metodo match()
+        """
+
+    # Por cada NO terminal se implemeto un metodo
     def S(self):
         if self.cadena[0] == 'a':
             self.match('a')
