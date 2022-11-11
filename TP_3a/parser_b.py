@@ -22,9 +22,9 @@ class ParserB(object):
         return self.cadena[0] == '$'
 
     """
-            Funcionamiento basico, cada metodo de la clase, lee el primer terminal de la cadena
-            y segun la tabla LL1, hace la llamada a otro metodo o llama al metodo match()
-        """
+        Funcionamiento basico, cada metodo de la clase, lee el primer terminal de la cadena
+        y segun la tabla LL1, hace la llamada a otro metodo o llama al metodo match()
+    """
 
     # Por cada NO terminal se implemeto un metodo
     def S(self):
@@ -46,11 +46,21 @@ class ParserB(object):
             self.S()
             self.A()
 
+    """
+            Este metodo recibe por parametro un simbolo terminal y se encarga, en caso de que el terminal pertenezca al
+            lenguaje, de sacar el terminal pasado por parametro de la cadena
+        """
+
     def match(self, s):
         if s == self.cadena[0]:
             self.cadena = self.cadena[1:]
         else:
             raise Exception("Error", "En Match")
+
+        """
+           En todos los metodos en caso de que el terminal no pertenezca al lenugaje
+           dispara una excepcion la cual indica que la cadena no pertenece a ese lenguaje
+        """
 
 
 if __name__ == '__main__':
