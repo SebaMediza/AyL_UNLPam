@@ -1,9 +1,9 @@
 class ParserA(object):
 
-    def __init__(self):
+    def __init__(self):  # Constructor que inicializa la cadena con None
         self.cadena = None
 
-    def evaluate(self, cadena):
+    def evaluate(self, cadena):  # Funcion principal de
         self.cadena = cadena
         self.S()
         return self.cadena[0] == '$'
