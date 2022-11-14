@@ -27,16 +27,16 @@ def turing_machine(cadena: str, regla: str):
                 fromm = x.find('from').text
                 if read is None and cadena == '':
                     estadoActual = x.find('to').text
-                elif cadena[0] not in lenguaje:
-                    return 'La cadena no pertenece al leguaje reconocido por la maquina', False
-                elif cadena[0] == read and estadoActual == fromm:
-                    # print(write)
-                    cadena = cadena[1:]
-                    result = result[0:indice] + write + result[indice + 1:]
-                    indice = indice + 1
-                    estadoActual = x.find('to').text
-                elif cadena == '':
-                    return estadoActual == final
+                elif cadena != '':
+                    if cadena[0] not in lenguaje:
+                        return 'La cadena no pertenece al leguaje reconocido por la maquina', False
+                    elif cadena[0] == read and estadoActual == fromm:
+                        cadena = cadena[1:]
+                        result = result[0:indice] + write + result[indice + 1:]
+                        indice = indice + 1
+                        estadoActual = x.find('to').text
+        if cadena == '':
+            return estadoActual == final
 
 
 if __name__ == '__main__':
