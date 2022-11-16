@@ -6,7 +6,6 @@ class NFA(object):
     final = ''
     cadena = ''
     read = ''
-    to = ''
     fromm = ''
     actual = ''
     lenguaje = []
@@ -31,12 +30,12 @@ class NFA(object):
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
-                print('El lenguaje reconocido es: ', self.lenguaje)
+        print('El lenguaje reconocido es: ', self.lenguaje)
 
     def run(self, word):
         print('Cadena a reconocer: ', word)
         self.cadena = word
-        # self.parse('./AFND.jff')
+        # print(self.parse('./AFND_epsilon.jff'))
 
     def parse(self, filename):
         with open(filename, 'r') as anfd:
@@ -45,14 +44,17 @@ class NFA(object):
             while self.cadena != '':
                 for y in root:
                     for x in y.findall('transition'):
-                        self.read = x.find('read').text
-                        self.fromm = x.find('from').text
-                        if self.cadena[0] == self.read and self.actual == self.fromm:
-                            self.cadena = self.cadena[1:]
-                            self.actual = x.find('to').text
+                        if self.cadena != '':
+                            self.read = x.find('read').text
+                            self.fromm = x.find('from').text
+                            if self.cadena[0] == self.read and self.actual == self.fromm:
+                                self.cadena = self.cadena[1:]
+                                self.actual = x.find('to').text
+                            elif self.read is None and self.actual == self.fromm:
+                                self.actual = x.find('to').text
             return self.actual == self.final
 
 
 if __name__ == '__main__':
-    p = NFA('./AFD_even_0_and_1.jff')
-    # p.run('abbbaa')
+    p = NFA('./AFND_epsilon.jff')
+    p.run('0011')
