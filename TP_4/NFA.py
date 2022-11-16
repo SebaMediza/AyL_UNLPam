@@ -9,6 +9,7 @@ class NFA(object):
     fromm = ''
     actual = ''
     lenguaje = []
+    newStates = []
 
     def __init__(self, file=None):
         super(NFA, self).__init__()
@@ -30,6 +31,9 @@ class NFA(object):
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
+                for g in y.findall('transition'):
+                    if g.find('read').text is None:
+                        self.split(filename)
         print('El lenguaje reconocido es: ', self.lenguaje)
 
     def run(self, word):
@@ -53,6 +57,28 @@ class NFA(object):
                             elif self.read is None and self.actual == self.fromm:
                                 self.actual = x.find('to').text
             return self.actual == self.final
+
+    def split(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if x.find('read') is None:
+                        self.newStates.append(x.find('to').text)
+
+    def splitParse(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            while self.cadena != '':
+                for y in root:
+                    for x in y.findall('transition'):
+                        self.read = x.find('read').text
+                        self.fromm = x.find('from').text
+                        if self.cadena[0] == self.read and self.fromm in self.newStates and self.actual == self.fromm:
+                            self.cadena = self.cadena[1:]
+                            self.actual = x.find('to').text
 
 
 if __name__ == '__main__':
