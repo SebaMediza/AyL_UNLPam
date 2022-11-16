@@ -10,13 +10,19 @@ class NFA(object):
     actual = ''
     lenguaje = []
     newStates = []
+    AFND = False
+    result = None
+    archivo = ''
 
     def __init__(self, file=None):
         super(NFA, self).__init__()
         self.load_from_file(file)
 
     def load_from_file(self, filename):
-        with open(filename, 'r') as anfd:
+        self.archivo = filename
+
+    def run(self, word):
+        with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
             for y in root:
@@ -24,22 +30,24 @@ class NFA(object):
                     if x.find('initial') is not None:
                         self.initial = x.get('id')
                         self.actual = self.initial
-                        print('Estado inicial: ', self.initial)
+                        print('Estado inicial:', self.initial)
                     if x.find('final') is not None:
                         self.final = x.get('id')
-                        print('Estado final: ', self.final)
+                        print('Estado final:', self.final)
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
                 for g in y.findall('transition'):
                     if g.find('read').text is None:
-                        self.split(filename)
-        print('El lenguaje reconocido es: ', self.lenguaje)
-
-    def run(self, word):
-        print('Cadena a reconocer: ', word)
+                        self.AFND = True
+        print('El lenguaje reconocido es:', self.lenguaje)
+        print('Cadena a reconocer:', word)
         self.cadena = word
-        # print(self.parse('./AFND_epsilon.jff'))
+        if self.AFND is False:
+            self.parse(self.archivo)
+        else:
+            self.split(self.archivo)
+        return self.result
 
     def parse(self, filename):
         with open(filename, 'r') as anfd:
@@ -54,23 +62,28 @@ class NFA(object):
                             if self.cadena[0] == self.read and self.actual == self.fromm:
                                 self.cadena = self.cadena[1:]
                                 self.actual = x.find('to').text
-                            elif self.read is None and self.actual == self.fromm:
-                                self.actual = x.find('to').text
-            return self.actual == self.final
+            self.result = self.actual == self.final
 
     def split(self, filename):
-        with open(filename, 'r') as AFND:
-            machine = ET.parse(AFND)
-            root = machine.getroot()
-            for y in root:
-                for x in y.findall('transition'):
-                    if x.find('read') is None:
-                        self.newStates.append(x.find('to').text)
+        if self.newStates is not None:
+            with open(filename, 'r') as AFND:
+                machine = ET.parse(AFND)
+                root = machine.getroot()
+                for y in root:
+                    for x in y.findall('transition'):
+                        if x.find('read').text is None:
+                            self.newStates.append(x.find('from').text)
+            self.splitParse(filename)
+            self.newStates.append(self.final)
 
     def splitParse(self, filename):
         with open(filename, 'r') as AFND:
             machine = ET.parse(AFND)
             root = machine.getroot()
+            for i in self.newStates:
+                if i is not self.final:
+                    self.initial = i
+                    self.actual = self.initial
             while self.cadena != '':
                 for y in root:
                     for x in y.findall('transition'):
@@ -79,8 +92,10 @@ class NFA(object):
                         if self.cadena[0] == self.read and self.fromm in self.newStates and self.actual == self.fromm:
                             self.cadena = self.cadena[1:]
                             self.actual = x.find('to').text
+                            break
+            self.result = self.actual == self.final
 
 
 if __name__ == '__main__':
     p = NFA('./AFND_epsilon.jff')
-    p.run('0011')
+    print('Resultado:', p.run('0'))
