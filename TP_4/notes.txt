@@ -1,0 +1,35 @@
+ def split(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if x.find('read').text is None:
+                        self.newstates.append(x.find('to').text)
+                        self.add(filename)
+                        self.splitparse(filename)
+
+    def add(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if self.newstates[0] == x.find('from').text:
+                        self.newstates.append(x.find('to').text)
+
+    def splitparse(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                while self.cadena != '':
+                    for x in y.findall('transition'):
+                        self.read = x.find('read').text
+                        self.fromm = x.find('from').text
+                        if self.cadena[0] == self.read and self.fromm in self.newstates and self.actual == self.fromm:
+                            self.cadena = self.cadena[1:]
+                            self.actual = x.find('to').text
+                            break
+            self.result = self.actual == self.final
+
