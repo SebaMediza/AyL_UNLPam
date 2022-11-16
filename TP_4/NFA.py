@@ -9,6 +9,7 @@ class NFA(object):
     to = ''
     fromm = ''
     actual = ''
+    lenguaje = []
 
     def __init__(self, file=None):
         super(NFA, self).__init__()
@@ -24,14 +25,18 @@ class NFA(object):
                         self.initial = x.get('id')
                         self.actual = self.initial
                         print('Estado inicial: ', self.initial)
-                    elif x.find('final') is not None:
+                    if x.find('final') is not None:
                         self.final = x.get('id')
                         print('Estado final: ', self.final)
+                for t in y.findall('transition'):
+                    if t.find('read').text not in self.lenguaje:
+                        self.lenguaje.append(t.find('read').text)
+                print('El lenguaje reconocido es: ', self.lenguaje)
 
     def run(self, word):
         print('Cadena a reconocer: ', word)
         self.cadena = word
-        self.parse('./AFND.jff')
+        # self.parse('./AFND.jff')
 
     def parse(self, filename):
         with open(filename, 'r') as anfd:
@@ -49,5 +54,5 @@ class NFA(object):
 
 
 if __name__ == '__main__':
-    p = NFA('./AFND.jff')
-    p.run('abbbaa')
+    p = NFA('./AFD_even_0_and_1.jff')
+    # p.run('abbbaa')
