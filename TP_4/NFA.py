@@ -65,25 +65,30 @@ class NFA(object):
             self.result = self.actual == self.final
 
     def split(self, filename):
-        if self.newStates is not None:
-            with open(filename, 'r') as AFND:
-                machine = ET.parse(AFND)
-                root = machine.getroot()
-                for y in root:
-                    for x in y.findall('transition'):
-                        if x.find('read').text is None:
-                            self.newStates.append(x.find('from').text)
-            self.splitParse(filename)
-            self.newStates.append(self.final)
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if x.find('read').text is None:
+                        self.newStates.append(x.find('to').text)
+                        self.add(filename)
+                        break
+        self.splitParse(filename)
+
+    def add(self, filename):
+        with open(filename, 'r') as AFND:
+            machine = ET.parse(AFND)
+            root = machine.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if self.newStates[0] == x.find('from').text:
+                        self.newStates.append(x.find('to').text)
 
     def splitParse(self, filename):
         with open(filename, 'r') as AFND:
             machine = ET.parse(AFND)
             root = machine.getroot()
-            for i in self.newStates:
-                if i is not self.final:
-                    self.initial = i
-                    self.actual = self.initial
             while self.cadena != '':
                 for y in root:
                     for x in y.findall('transition'):
@@ -98,4 +103,4 @@ class NFA(object):
 
 if __name__ == '__main__':
     p = NFA('./AFND_epsilon.jff')
-    print('Resultado:', p.run('0'))
+    print('Resultado:', p.run('1111'))
