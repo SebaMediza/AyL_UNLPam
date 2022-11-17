@@ -28,7 +28,7 @@ class NFA(object):
             for y in root:
                 for g in y.findall('transition'):
                     if g.find('read').text is None:
-                        self.splitparse(self.archivo)
+                        self.splitparse()
                         break
                 for x in y.findall('state'):
                     if x.find('initial') is not None:
@@ -44,11 +44,11 @@ class NFA(object):
         print('El lenguaje reconocido es:', self.lenguaje)
         print('Cadena a reconocer:', word)
         self.cadena = word
-        self.parse(self.archivo)
+        self.parse()
         return self.result
 
-    def parse(self, filename):
-        with open(filename, 'r') as anfd:
+    def parse(self):
+        with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
             while self.cadena != '':
@@ -62,8 +62,8 @@ class NFA(object):
                                 self.actual = x.find('to').text
             self.result = self.actual == self.final
 
-    def splitparse(self, filename):
-        with open(filename, 'r') as anfd:
+    def splitparse(self):
+        with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
             while self.cadena != '':
