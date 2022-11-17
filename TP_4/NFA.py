@@ -22,6 +22,7 @@ class NFA(object):
         self.archivo = filename
 
     def run(self, word):
+        self.cadena = word
         with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
@@ -43,7 +44,6 @@ class NFA(object):
                         self.lenguaje.append(t.find('read').text)
         # print('El lenguaje reconocido es:', self.lenguaje)
         # print('Cadena a reconocer:', word)
-        self.cadena = word
         self.parse()
         return self.result
 
@@ -63,16 +63,29 @@ class NFA(object):
             self.result = self.actual == self.final
 
     def splitparse(self):
+        temp = []
         with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
             while self.cadena != '':
                 for y in root:
                     for x in y.findall('transition'):
-                        if x.find('read') is None:
-                            self.newstates.append(x.find('to').text)
+                        if x.find('read').text is None:
+                            temp.append(x.find('to').text)
+                            self.complete(temp)
+                            self.newstates.append(temp)
+                            temp.clear()
+    def complete(self, temp):
+        with open(self.archivo, 'r') as anfd:
+            test = ET.parse(anfd)
+            root = test.getroot()
+            for y in root:
+                for x in y.findall('transition'):
+                    if temp[0] == x.find('from').text:
+                        temp.append(x.find('to').text)
+        return temp
 
 
 if __name__ == '__main__':
-    p = NFA('./AFD_even_0_and_1.jff')
+    p = NFA('./AFND_epsilon_even_0_or_1.jff')
     print('Resultado:', p.run('11'))
