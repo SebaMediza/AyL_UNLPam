@@ -44,6 +44,7 @@ class NFA(object):
         print('El lenguaje reconocido es:', self.lenguaje)
         print('Cadena a reconocer:', word)
         self.cadena = word
+        self.parse(self.archivo)
         return self.result
 
     def parse(self, filename):
@@ -73,5 +74,5 @@ class NFA(object):
 
 
 if __name__ == '__main__':
-    p = NFA('./AFND_epsilon_even_0_or_1.jff')
-    print('Resultado:', p.run('1111'))
+    p = NFA('./AFD_even_0_and_1.jff')
+    print('Resultado:', p.run('11'))
