@@ -34,15 +34,15 @@ class NFA(object):
                     if x.find('initial') is not None:
                         self.initial = x.get('id')
                         self.actual = self.initial
-                        print('Estado inicial:', self.initial)
+                        # print('Estado inicial:', self.initial)
                     if x.find('final') is not None:
                         self.final = x.get('id')
-                        print('Estado final:', self.final)
+                        # print('Estado final:', self.final)
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
-        print('El lenguaje reconocido es:', self.lenguaje)
-        print('Cadena a reconocer:', word)
+        # print('El lenguaje reconocido es:', self.lenguaje)
+        # print('Cadena a reconocer:', word)
         self.cadena = word
         self.parse()
         return self.result
