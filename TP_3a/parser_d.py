@@ -11,7 +11,7 @@
        B → bB | ε
 
        S → F | ε
-       F → aA | bB
+       F → aS | bS
 """
 
 
