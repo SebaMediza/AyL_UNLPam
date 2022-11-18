@@ -9,7 +9,15 @@ class NFA(object):
     fromm = ''
     actual = ''
     lenguaje = []
-    newstates = []
+    newstates = [
+        ['0'],
+        ['1', '2']
+    ]
+    # newstates = [
+    #     ['0'],
+    #     ['1', '2'],
+    #     ['3', '4']
+    # ]
     AFND = False
     result = None
     archivo = ''
@@ -35,15 +43,11 @@ class NFA(object):
                     if x.find('initial') is not None:
                         self.initial = x.get('id')
                         self.actual = self.initial
-                        # print('Estado inicial:', self.initial)
                     if x.find('final') is not None:
                         self.final = x.get('id')
-                        # print('Estado final:', self.final)
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
-        # print('El lenguaje reconocido es:', self.lenguaje)
-        # print('Cadena a reconocer:', word)
         self.parse()
         return self.result
 
@@ -63,29 +67,26 @@ class NFA(object):
             self.result = self.actual == self.final
 
     def splitparse(self):
-        temp = []
-        with open(self.archivo, 'r') as anfd:
-            test = ET.parse(anfd)
-            root = test.getroot()
-            while self.cadena != '':
-                for y in root:
-                    for x in y.findall('transition'):
-                        if x.find('read').text is None:
-                            temp.append(x.find('to').text)
-                            self.complete(temp)
-                            self.newstates.append(temp)
-                            temp.clear()
-    def complete(self, temp):
         with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
             for y in root:
                 for x in y.findall('transition'):
-                    if temp[0] == x.find('from').text:
-                        temp.append(x.find('to').text)
-        return temp
+                    if x.find('read').text is None:
+                        self.actual = x.find('to').text
+            while self.cadena != '':
+                for lista in self.newstates:
+                    for y in root:
+                        for x in y.findall('transition'):
+                            if self.cadena != '':
+                                self.read = x.find('read').text
+                                self.fromm = x.find('from').text
+                                if self.cadena[0] == self.read and self.actual == self.fromm and self.fromm in lista:
+                                    self.cadena = self.cadena[1:]
+                                    self.actual = x.find('to').text
+        self.result = self.actual == self.final
 
 
 if __name__ == '__main__':
-    p = NFA('./AFND_epsilon_even_0_or_1.jff')
-    print('Resultado:', p.run('11'))
+    p = NFA('./AFND_epsilon.jff')
+    print('Resultado:', p.run('01'))
