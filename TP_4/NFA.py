@@ -9,15 +9,15 @@ class NFA(object):
     fromm = ''
     actual = ''
     lenguaje = []
-    newstates = [
-        ['0'],
-        ['1', '2']
-    ]
     # newstates = [
     #     ['0'],
-    #     ['1', '2'],
-    #     ['3', '4']
+    #     ['1', '2']
     # ]
+    newstates = [
+        ['0'],
+        ['1', '2'],
+        ['3', '4']
+    ]
     AFND = False
     result = None
     archivo = ''
@@ -85,6 +85,11 @@ class NFA(object):
             while self.actual != self.fromm or self.cadena != '':
                 for lista in self.newstates:
                     for y in root:
+                        for x in y.findall('state'):
+                            if x.find('initial') is None and x.find('final') is None and x.get('id') in lista:
+                                self.actual = x.get('id')
+                            elif x.find('initial') is not None and x.get('id') in lista:
+                                self.actual = x.get('id')
                         for x in y.findall('transition'):
                             if self.cadena != '':
                                 self.read = x.find('read').text
