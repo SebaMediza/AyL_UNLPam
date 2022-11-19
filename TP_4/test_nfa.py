@@ -84,7 +84,7 @@ class TestCaseNFA2(unittest.TestCase):
             # ("", False),
             # ("0", False),
             # ("1", True),
-            ("0000", False),
+            # ("0000", False),
             # ("1111", True),
             ("0011", True),
             # ("01", True),

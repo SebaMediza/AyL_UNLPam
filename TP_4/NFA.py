@@ -48,25 +48,25 @@ class NFA(object):
         with open(self.archivo, 'r') as anfd:
             test = ET.parse(anfd)
             root = test.getroot()
-            while self.cadena != '':
-                for y in root:
-                    for x in y.findall('state'):
-                        if x.find('initial') is not None:
-                            self.initial = x.get('id')
-                            self.actual = self.initial
-                        if x.find('final') is not None:
-                            self.final = x.get('id')
-                    for t in y.findall('transition'):
-                        if t.find('read').text not in self.lenguaje:
-                            self.lenguaje.append(t.find('read').text)
-                    for x in y.findall('transition'):
-                        if self.cadena != '':
-                            self.read = x.find('read').text
-                            self.fromm = x.find('from').text
-                            if self.cadena[0] == self.read and self.actual == self.fromm:
-                                self.cadena = self.cadena[1:]
-                                self.actual = x.find('to').text
-            self.result = self.actual == self.final
+            for y in root:
+                for x in y.findall('state'):
+                    if x.find('initial') is not None:
+                        self.initial = x.get('id')
+                        self.actual = self.initial
+                    if x.find('final') is not None:
+                        self.final = x.get('id')
+                for t in y.findall('transition'):
+                    if t.find('read').text not in self.lenguaje:
+                        self.lenguaje.append(t.find('read').text)
+                    while self.cadena != '':
+                        for x in y.findall('transition'):
+                            if self.cadena != '':
+                                self.read = x.find('read').text
+                                self.fromm = x.find('from').text
+                                if self.cadena[0] == self.read and self.actual == self.fromm:
+                                    self.cadena = self.cadena[1:]
+                                    self.actual = x.find('to').text
+                    self.result = self.actual == self.final
 
     def splitparse(self):
         with open(self.archivo, 'r') as anfd:
@@ -91,8 +91,6 @@ class NFA(object):
                                 self.fromm = x.find('from').text
                                 if self.cadena[0] == self.read and self.actual == self.fromm and self.fromm in lista:
                                     self.cadena = self.cadena[1:]
-                                    self.actual = x.find('to').text
-                                elif self.read is None:
                                     self.actual = x.find('to').text
                             else:
                                 self.result = self.actual == self.final
