@@ -34,21 +34,21 @@ class TestCaseNFA1(unittest.TestCase):
         v = [
             ("", True),
             ("11100", True),
-            # ("10001", True),
-            # ("0001111", True),
+            ("10001", True),
+            ("0001111", True),
             ("01111", True),
             ("11111", True),
             ("1", True),
-            # ("101010", False),
+            ("101010", False),
             ("111101", False),
-            # ("10000001", True),
+            ("10000001", True),
             ("01111110", True),
-            # ("01110110", False),
-            # ("100011110", True),
-            # ("011100001", True),
+            ("01110110", False),
+            ("100011110", True),
+            ("011100001", True),
             ("0", True),
             ("000001", False),
-            # ("111110", False)
+            ("111110", False)
         ]
         p = NFA("AFND_epsilon_even_0_or_1.jff")
         for t in v:
@@ -81,14 +81,14 @@ class TestCaseNFA2(unittest.TestCase):
     """
     def test(self):
         v = [
-            # ("", False),
-            # ("0", False),
-            # ("1", True),
-            # ("0000", False),
-            # ("1111", True),
-            # ("0011", True),
-            # ("01", True),
-            # ("010", False),
+            ("", False),
+            ("0", False),
+            ("1", True),
+            ("0000", False),
+            ("1111", True),
+            ("0011", True),
+            ("01", True),
+            ("010", False),
             ("101", False)
         ]
         p = NFA("AFND_epsilon.jff")
@@ -206,4 +206,4 @@ class TestCaseFA_M3(unittest.TestCase):
 if __name__ == '__main__':
 
     unittest.main()
-    unittest.result
+    print(unittest.result)

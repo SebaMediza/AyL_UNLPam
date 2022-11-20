@@ -18,6 +18,7 @@ class NFA(object):
         ['1', '2'],
         ['3', '4']
     ]
+    finalstates = []
     AFND = False
     result = None
     archivo = ''
@@ -78,7 +79,7 @@ class NFA(object):
                         self.initial = x.get('id')
                         self.actual = self.initial
                     if x.find('final') is not None:
-                        self.final = x.get('id')
+                        self.finalstates.append(x.get('id'))
                 for t in y.findall('transition'):
                     if t.find('read').text not in self.lenguaje:
                         self.lenguaje.append(t.find('read').text)
@@ -90,6 +91,11 @@ class NFA(object):
                                 self.actual = x.get('id')
                             elif x.find('initial') is not None and x.get('id') in lista:
                                 self.actual = x.get('id')
+                            elif x.find('final') is not None and x.get('id') in lista:
+                                self.final = x.get('id')
+                            elif x.find('final') is not None and x.get('id') in lista:
+                                self.actual = x.get('id')
+                                break
                         for x in y.findall('transition'):
                             if self.cadena != '':
                                 self.read = x.find('read').text
@@ -98,10 +104,10 @@ class NFA(object):
                                     self.cadena = self.cadena[1:]
                                     self.actual = x.find('to').text
                             else:
-                                self.result = self.actual == self.final
+                                self.result = self.actual in self.finalstates
                                 return self.result
 
 
 if __name__ == '__main__':
-    p = NFA('./AFND_epsilon.jff')
-    print('Resultado:', p.run('101'))
+    p = NFA('./AFND_epsilon_even_0_or_1.jff')
+    print('Resultado:', p.run('1'))
