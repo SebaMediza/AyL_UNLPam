@@ -9,10 +9,6 @@ class NFA(object):
     fromm = ''
     actual = ''
     lenguaje = []
-    # newstates = [
-    #     ['0'],
-    #     ['1', '2']
-    # ]
     newstates = [
         ['0'],
         ['1', '2'],
@@ -89,7 +85,7 @@ class NFA(object):
                         for x in y.findall('state'):
                             if x.find('initial') is None and x.find('final') is None and x.get('id') in lista:
                                 self.actual = x.get('id')
-                            elif x.find('initial') is not None and x.get('id') in lista:
+                            if x.find('initial') is not None and x.get('id') in lista:
                                 self.actual = x.get('id')
                             elif x.find('final') is not None and x.get('id') in lista:
                                 self.final = x.get('id')
@@ -110,4 +106,4 @@ class NFA(object):
 
 if __name__ == '__main__':
     p = NFA('./AFND_epsilon_even_0_or_1.jff')
-    print('Resultado:', p.run('1'))
+    print('Resultado:', p.run('11100'))
